@@ -1,0 +1,85 @@
+
+CREATE TABLE `complaints` (
+  `complaint_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `status` enum('new','in_progress','resolved') DEFAULT 'new',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`complaint_id`)
+)
+
+
+CREATE TABLE `notifications` (
+  `notification_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_email` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `type` enum('support_response','complaint_response','general') DEFAULT 'general',
+  `related_id` int(11) DEFAULT NULL,
+  `is_read` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`notification_id`),
+  KEY `idx_user_email` (`user_email`),
+  KEY `idx_is_read` (`is_read`),
+  KEY `idx_created_at` (`created_at`)
+) 
+
+
+CREATE TABLE `reminders` (
+  `reminder_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_email` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `reminder_date` date NOT NULL,
+  `reminder_time` time NOT NULL,
+  `voice_file` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `is_sent` tinyint(1) DEFAULT 0,
+  `updated_at` datetime DEFAULT NULL,
+  `is_seen` tinyint(1) DEFAULT 0,
+  `is_received` tinyint(1) DEFAULT 0,
+  PRIMARY KEY (`reminder_id`),
+  KEY `reminders_user_email_fk` (`user_email`),
+  CONSTRAINT `reminders_user_email_fk` FOREIGN KEY (`user_email`) REFERENCES `users` (`email`) ON DELETE CASCADE
+);
+
+-- Add columns if table already exists
+ALTER TABLE `reminders` ADD COLUMN `is_seen` TINYINT(1) DEFAULT 0;
+-- Removed is_heard column as per user request
+-- ALTER TABLE `reminders` DROP COLUMN `is_heard`;
+
+
+CREATE TABLE `support_requests` (
+  `request_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_email` varchar(255) NOT NULL,
+  `reminder_id` int(11) DEFAULT NULL,
+  `issue_type` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `status` enum('new','in_progress','resolved','closed') DEFAULT 'new',
+  `admin_response` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`request_id`),
+  KEY `user_email` (`user_email`),
+  KEY `reminder_id` (`reminder_id`),
+  CONSTRAINT `support_requests_ibfk_1` FOREIGN KEY (`user_email`) REFERENCES `users` (`email`) ON DELETE CASCADE,
+  CONSTRAINT `support_requests_ibfk_2` FOREIGN KEY (`reminder_id`) REFERENCES `reminders` (`reminder_id`) ON DELETE SET NULL
+) 
+
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `phone` varchar(20) DEFAULT NULL,
+  `profile_picture` varchar(255) DEFAULT NULL,
+  `is_admin` tinyint(1) DEFAULT 0,
+  `reset_token` varchar(255) DEFAULT NULL,
+  `reset_expires` datetime DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `email` (`email`)
+) 

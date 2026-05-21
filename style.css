@@ -1,0 +1,232 @@
+/* Common Styles for SecondBrain */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #1f74e7;
+  --primary-dark: #1455b8;
+  --secondary: #20c997;
+  --text-light: #AAB4C3;
+  --bg-dark: #0f1419;
+  --bg-darker: #1a2332;
+  --bg-darkest: #2d3748;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 50%, var(--bg-darkest) 100%);
+  color: white;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Common Container Styles */
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 2rem 60px;
+  min-height: calc(100vh - 60px); /* Account for footer */
+}
+
+.card {
+  background: rgba(35, 43, 62, 0.75);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(31, 116, 231, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(31,116,231,0.12), 0 2px 8px rgba(32,201,151,0.10);
+}
+
+/* Header Styles */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(15, 20, 25, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(31, 116, 231, 0.1);
+  z-index: 1000;
+  padding: 1rem 0;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(15, 20, 25, 0.6);
+  border: 1px solid rgba(31, 116, 231, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(31, 116, 231, 0.2);
+}
+
+/* Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  box-shadow: 0 4px 20px rgba(31, 116, 231, 0.3);
+}
+
+.btn-secondary {
+  background: rgba(170, 180, 195, 0.1);
+  color: var(--text-light);
+  border: 1px solid rgba(170, 180, 195, 0.2);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(31, 116, 231, 0.4);
+}
+
+/* Message Styles */
+.message {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.message.success {
+  background: rgba(32, 201, 151, 0.1);
+  border: 1px solid rgba(32, 201, 151, 0.2);
+  color: #20c997;
+}
+
+.message.error {
+  background: rgba(231, 69, 69, 0.1);
+  border: 1px solid rgba(231, 69, 69, 0.2);
+  color: #e74545;
+}
+
+/* Table Styles */
+.table-container {
+  overflow-x: auto;
+  background: rgba(35, 43, 62, 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(31, 116, 231, 0.1);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(31, 116, 231, 0.1);
+}
+
+.table th {
+  background: rgba(31, 116, 231, 0.1);
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.table tr:hover {
+  background: rgba(31, 116, 231, 0.05);
+}
+
+/* Footer Styles */
+.footer {
+  width: 100%;
+  padding: 20px 0;
+  text-align: center;
+  background: transparent;
+}
+
+.footer-copyright {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 100px 1rem 40px;
+  }
+  
+  .nav-container {
+    padding: 0 1rem;
+  }
+  
+  .card {
+    padding: 1.5rem;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    padding: 80px 1rem 30px;
+  }
+  
+  .table-container {
+    margin: 0 -1rem;
+    border-radius: 0;
+  }
+}
